@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pagination Component</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #f5f5f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 12px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    max-width: 360px;
+    width: 100%;
+  }
+
+  .pagination-side {
+    display: flex;
+    gap: 8px;
+  }
+
+  .pagination-btn {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #333;
+    font-size: 18px;
+    transition: background 0.15s;
+  }
+
+  .pagination-btn:hover:not(:disabled) {
+    background: #f0f0f0;
+  }
+
+  .pagination-btn:active:not(:disabled) {
+    transform: scale(0.96);
+  }
+
+  .pagination-btn:disabled {
+    color: #bbb;
+    cursor: not-allowed;
+  }
+
+  .pagination-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #666;
+    white-space: nowrap;
+  }
+
+  .pagination-input {
+    width: 44px;
+    height: 44px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #111;
+    -moz-appearance: textfield;
+  }
+
+  .pagination-input::-webkit-outer-spin-button,
+  .pagination-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .pagination-total {
+    font-weight: 500;
+    color: #111;
+  }
+</style>
+</head>
+<body>
+
+<div class="pagination" id="pagination">
+  <div class="pagination-side">
+    <button class="pagination-btn" id="firstBtn" aria-label="First page">«</button>
+    <button class="pagination-btn" id="prevBtn" aria-label="Previous page">‹</button>
+  </div>
+
+  <div class="pagination-info">
+    <input type="number" id="pageInput" class="pagination-input" min="1" value="1">
+    <span>of <span class="pagination-total" id="totalPages">9</span></span>
+  </div>
+
+  <div class="pagination-side">
+    <button class="pagination-btn" id="nextBtn" aria-label="Next page">›</button>
+    <button class="pagination-btn" id="lastBtn" aria-label="Last page">»</button>
+  </div>
+</div>
+
+<script>
+  // ===== ตั้งค่าหลัก =====
+  let currentPage = 1;
+  const totalPages = 9; // เปลี่ยนเป็นจำนวนหน้าจริงของคุณ
+
+  // ===== อ้างอิง element =====
+  const pageInput = document.getElementById('pageInput');
+  const totalPagesEl = document.getElementById('totalPages');
+  const firstBtn = document.getElementById('firstBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const lastBtn = document.getElementById('lastBtn');
+
+  pageInput.max = totalPages;
+  totalPagesEl.textContent = totalPages;
+
+  // ===== ฟังก์ชันหลัก: อัปเดตหน้า =====
+  function goToPage(page) {
+    // จำกัดค่าให้อยู่ในช่วง 1 ถึง totalPages
+    page = Math.max(1, Math.min(totalPages, page));
+    currentPage = page;
+
+    pageInput.value = currentPage;
+
+    // ปิดปุ่มเมื่ออยู่หน้าแรก/หน้าสุดท้าย
+    firstBtn.disabled = currentPage === 1;
+    prevBtn.disabled = currentPage === 1;
+    nextBtn.disabled = currentPage === totalPages;
+    lastBtn.disabled = currentPage === totalPages;
+
+    // TODO: ใส่ logic โหลดข้อมูลของหน้านั้นๆ ตรงนี้
+    // เช่น fetchData(currentPage) หรือ renderList(currentPage)
+    console.log('ไปหน้า:', currentPage);
+  }
+
+  // ===== ปุ่มควบคุม =====
+  firstBtn.addEventListener('click', () => goToPage(1));
+  prevBtn.addEventListener('click', () => goToPage(currentPage - 1));
+  nextBtn.addEventListener('click', () => goToPage(currentPage + 1));
+  lastBtn.addEventListener('click', () => goToPage(totalPages));
+
+  // ===== ช่องกรอกเลขหน้า =====
+  pageInput.addEventListener('change', () => {
+    const value = parseInt(pageInput.value) || 1;
+    goToPage(value);
+  });
+
+  // กด Enter เพื่อยืนยัน (ไม่ต้องรอ blur)
+  pageInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      pageInput.blur();
+    }
+  });
+
+  // ตั้งค่าเริ่มต้น
+  goToPage(1);
+</script>
+
+</body>
+</html>
