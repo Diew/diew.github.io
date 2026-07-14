@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>Profile Dropdown Menu Mockup</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #f3f1ea;
+    padding: 40px 20px;
+  }
+  .topbar {
+    max-width: 700px;
+    margin: 0 auto 20px;
+    background: #ffffff;
+    border: 1px solid #ddd8c8;
+    border-radius: 8px;
+    padding: 10px 16px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 18px;
+    position: relative;
+  }
+  .bell {
+    font-size: 20px;
+    color: #555;
+    cursor: pointer;
+  }
+  .trigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .trigger:hover {
+    background: #f4f4f0;
+    border-color: #e2ddc9;
+  }
+  .avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #cfe0f7;
+    color: #185fa5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .name {
+    font-weight: 600;
+    color: #222;
+  }
+  .chevron {
+    font-size: 11px;
+    color: #777;
+    transition: transform 0.15s ease;
+  }
+  .trigger.open .chevron {
+    transform: rotate(180deg);
+  }
+  .menu {
+    display: none;
+    position: absolute;
+    right: 16px;
+    top: 54px;
+    width: 240px;
+    background: #ffffff;
+    border: 1px solid #ddd8c8;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08);
+    padding: 8px;
+    z-index: 10;
+  }
+  .menu.show {
+    display: block;
+  }
+  .gold-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    font-size: 13px;
+    color: #8a6d1c;
+    background: #fdf6e3;
+    border-radius: 6px;
+    margin-bottom: 4px;
+  }
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 9px 10px;
+    font-size: 14px;
+    color: #333;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .menu-item:hover {
+    background: #f4f4f0;
+  }
+  .menu-item.logout {
+    color: #c0392b;
+  }
+  .divider {
+    border-top: 1px solid #eae6d8;
+    margin: 6px 0;
+  }
+  .icon {
+    width: 16px;
+    display: inline-flex;
+    justify-content: center;
+    font-size: 15px;
+  }
+  .note {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 13px;
+    color: #888;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <span class="bell">🔔</span>
+    <button class="trigger" id="trigger" onclick="toggleMenu()">
+      <span class="avatar">D</span>
+      <span class="name">Diew</span>
+      <span class="chevron">▼</span>
+    </button>
+
+    <div class="menu" id="menu">
+      <div class="gold-row">
+        <span class="icon">🪙</span> 1.44K Gold
+      </div>
+
+      <button class="menu-item"><span class="icon">👤</span> Profile</button>
+      <button class="menu-item"><span class="icon">✏️</span> Edit profile</button>
+
+      <div class="divider"></div>
+
+      <button class="menu-item"><span class="icon">📥</span> Inbox</button>
+      <button class="menu-item"><span class="icon">📤</span> Sendbox</button>
+
+      <div class="divider"></div>
+
+      <button class="menu-item"><span class="icon">🙈</span> Hide Avatar/Signature</button>
+      <button class="menu-item"><span class="icon">🔤</span> Text Size Change</button>
+      <button class="menu-item"><span class="icon">🧩</span> My Custom View</button>
+      <button class="menu-item"><span class="icon">😊</span> My Stickers</button>
+      <button class="menu-item"><span class="icon">🔍</span> User Search</button>
+      <button class="menu-item"><span class="icon">🎨</span> Theme Designer</button>
+
+      <div class="divider"></div>
+
+      <button class="menu-item logout"><span class="icon">🚪</span> Logout</button>
+    </div>
+  </div>
+
+  <p class="note">คลิกที่ปุ่ม "Diew ▼" ด้านบนเพื่อเปิด/ปิดเมนู</p>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('menu').classList.toggle('show');
+    document.getElementById('trigger').classList.toggle('open');
+  }
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.topbar')) {
+      document.getElementById('menu').classList.remove('show');
+      document.getElementById('trigger').classList.remove('open');
+    }
+  });
+</script>
+
+</body>
+</html>
